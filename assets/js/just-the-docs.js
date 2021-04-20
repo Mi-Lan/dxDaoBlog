@@ -4,13 +4,17 @@
 
 // Event handling
 
+
+
 jtd.addEvent = function(el, type, handler) {
   if (el.attachEvent) el.attachEvent('on'+type, handler); else el.addEventListener(type, handler);
 }
 jtd.removeEvent = function(el, type, handler) {
   if (el.detachEvent) el.detachEvent('on'+type, handler); else el.removeEventListener(type, handler);
 }
+
 jtd.onReady = function(ready) {
+
   // in case the document is already rendered
   if (document.readyState!='loading') ready();
   // modern browsers
@@ -20,10 +24,19 @@ jtd.onReady = function(ready) {
       if (document.readyState=='complete') ready();
   });
 }
+//   const toggleDarkMode = document.querySelector('.js-toggle-dark-mode');
+// console.log(toggleDarkMode)
+//   toggleDarkMode.addEventListener('click',function(){
+//     console.log('jere')
+//   })
+//   toggleDarkMode.attachEvent('onclick',function(){
+//     console.log("here")
+//   })
 
 // Show/hide mobile menu
 
 function initNav() {
+
   jtd.addEvent(document, 'click', function(e){
     var target = e.target;
     while (target && !(target.classList && target.classList.contains('nav-list-expander'))) {
@@ -447,19 +460,21 @@ function searchLoaded(index, docs) {
 
 // Switch theme
 
-jtd.getTheme = function() {
-  var cssFileHref = document.querySelector('[rel="stylesheet"]').getAttribute('href');
-  return cssFileHref.substring(cssFileHref.lastIndexOf('-') + 1, cssFileHref.length - 4);
-}
+// jtd.getTheme = function() {
+//   var cssFileHref = document.querySelector('[rel="stylesheet"]').getAttribute('href');
+//   return cssFileHref.substring(cssFileHref.lastIndexOf('-') + 1, cssFileHref.length - 4);
+// }
+//
+// jtd.setTheme = function(theme) {
+//   var cssFile = document.querySelector('[rel="stylesheet"]');
+//   cssFile.setAttribute('href', '{{ "assets/css/just-the-docs-" | absolute_url }}' + theme + '.css');
+// }
 
-jtd.setTheme = function(theme) {
-  var cssFile = document.querySelector('[rel="stylesheet"]');
-  cssFile.setAttribute('href', '{{ "assets/css/just-the-docs-" | absolute_url }}' + theme + '.css');
-}
 
 // Document ready
 
 jtd.onReady(function(){
+  console.log('ready')
   initNav();
   {%- if site.search_enabled != false %}
   initSearch();
